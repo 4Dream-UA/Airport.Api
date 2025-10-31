@@ -34,7 +34,7 @@ class Type(models.Model):
 
 class Airplane(models.Model):
     """
-    Model that include unique/important airplane information
+    Model that include unique/important airplane information.
     """
     name = models.CharField(max_length=255, unique=True)
     rows = models.IntegerField()
@@ -44,7 +44,7 @@ class Airplane(models.Model):
 
 class Flight(models.Model):
     """
-    Model that include flight information
+    Model that include flight information.
     """
     route = models.ForeignKey("Route", on_delete=models.CASCADE)  # TODO: Add a MT1 relation if airlines app models completed
     airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL)
