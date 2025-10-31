@@ -10,4 +10,9 @@ class Crew(models.Model):
     last_name = models.CharField(max_length=255)
 
 
-
+class TypeReference(models.Model):
+    speed = models.IntegerField()
+    distance = models.IntegerField()
+    carrying = models.IntegerField()
+    mass = models.IntegerField()
+    height = models.IntegerField()
