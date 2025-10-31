@@ -1,4 +1,5 @@
 from django.db import models
+from extra_scripts.get_image_path_for_db_model import get_image_path_for_db_model
 
 
 class Crew(models.Model):
@@ -32,7 +33,10 @@ class Type(models.Model):
 
 
 class Airplane(models.Model):
-    name = models.CharField(max_length=255)
+    """
+    Model that include unique/important airplane information
+    """
+    name = models.CharField(max_length=255, unique=True)
     rows = models.IntegerField()
     seats = models.IntegerField()
-    image = models.ImageField(upload_to='airplane/images/')
+    image = models.ImageField(upload_to=get_image_path_for_db_model)
