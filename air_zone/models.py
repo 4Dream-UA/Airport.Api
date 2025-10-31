@@ -29,3 +29,10 @@ class Type(models.Model):
     """
     name = models.CharField(max_length=255)
     type_reference = models.ForeignKey(TypeReference, on_delete=models.CASCADE)
+
+
+class Airplane(models.Model):
+    name = models.CharField(max_length=255)
+    rows = models.IntegerField()
+    seats = models.IntegerField()
+    image = models.ImageField(upload_to='airplane/images/')
