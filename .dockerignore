@@ -1,0 +1,7 @@
+venv/
+.gitignore
+database_models.drawio
+database_models.drawio.png
+Dockerfile
+docker-compose.yml
+README.md
