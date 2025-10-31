@@ -29,7 +29,7 @@ class Type(models.Model):
     narrow-body, wide-body, etc.
     """
     name = models.CharField(max_length=255)
-    type_reference = models.ForeignKey(TypeReference, on_delete=models.CASCADE)
+    type_reference = models.OneToOneField(TypeReference, on_delete=models.CASCADE)
 
 
 class Airplane(models.Model):
@@ -40,3 +40,14 @@ class Airplane(models.Model):
     rows = models.IntegerField()
     seats = models.IntegerField()
     image = models.ImageField(upload_to=get_image_path_for_db_model)
+
+
+class Flight(models.Model):
+    """
+    Model that include flight information
+    """
+    route = models.ForeignKey("Route", on_delete=models.CASCADE)  # TODO: Add a MT1 relation if airlines app models completed
+    airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL)
+    crew = models.ForeignKey(Crew, on_delete=models.SET_NULL)
+    departure_time = models.DateTimeField()
+    arrival_time = models.DateTimeField()
