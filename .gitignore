@@ -1,1 +1,27 @@
-venv/
+# Operation system
+*.swp
+*.bak
+*.pyc
+
+# Virtual environment
+/venv
+/env
+/ENV
+
+# Requiredd
+/__pycache__/
+
+# Django
+# Secrets keys
+# ____________________________________________________________
+# DO NOT forget to add the file with the actual secret data,
+# which you use for the local environment,
+# For example, .env or settings_local.py if you use them.
+# ____________________________________________________________
+.env
+
+# Media and static files
+/media/
+
+# Python test
+.pytest_cache
