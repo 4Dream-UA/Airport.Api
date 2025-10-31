@@ -20,3 +20,12 @@ class TypeReference(models.Model):
     carrying = models.IntegerField()
     mass = models.IntegerField()
     height = models.IntegerField()
+
+
+class Type(models.Model):
+    """
+    Model that include type of airplane, such as:
+    narrow-body, wide-body, etc.
+    """
+    name = models.CharField(max_length=255)
+    type_reference = models.ForeignKey(TypeReference, on_delete=models.CASCADE)
