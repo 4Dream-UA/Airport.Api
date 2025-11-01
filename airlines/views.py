@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework.viewsets import GenericViewSet
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -10,34 +10,19 @@ from airlines.serializers import (
     CitySerializer,
     AirportSerializer
 )
-from airlines.mixins import IsStaffOrReadOnlyMixin
+from airlines.mixins import GeneralMixin
 
 
-class CountryListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
+class CountryViewSet(GeneralMixin, GenericViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
 
-class CountryDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
-
-
-class CityListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
+class CityViewSet(GeneralMixin, GenericViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
 
 
-class CityDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
-    queryset = City.objects.all()
-    serializer_class = CitySerializer
-
-
-class AirportListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
-    queryset = Airport.objects.all()
-    serializer_class = AirportSerializer
-
-
-class AirportDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
+class AirportViewSet(GeneralMixin, GenericViewSet):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
