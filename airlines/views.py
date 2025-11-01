@@ -4,28 +4,24 @@ from django.urls import reverse
 
 from airlines.models import Country, City
 from airlines.serializers import CountrySerializer, CitySerializer
-from airlines.permissions import IsStaffOrReadOnly
+from airlines.mixins import IsStaffOrReadOnlyMixin
 
 
-class CountryListCreateView(generics.ListCreateAPIView):
+class CountryListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
-    permission_classes = (IsStaffOrReadOnly,)
 
 
-class CountryDestroyView(generics.DestroyAPIView):
+class CountryDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
-    permission_classes = (IsStaffOrReadOnly,)
 
 
-class CityListCreateView(generics.ListCreateAPIView):
+class CityListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
-    permission_classes = (IsStaffOrReadOnly,)
 
 
-class CityDestroyView(generics.DestroyAPIView):
+class CityDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
-    permission_classes = (IsStaffOrReadOnly,)
