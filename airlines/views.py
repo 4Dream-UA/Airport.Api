@@ -7,7 +7,7 @@ from airlines.serializers import CountrySerializer
 from airlines.permissions import IsStaffOrReadOnly
 
 
-class CountryListCreate(generics.ListCreateAPIView):
+class CountryListCreateView(generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     permission_classes = (IsStaffOrReadOnly,)
@@ -17,7 +17,7 @@ class CountryListCreate(generics.ListCreateAPIView):
         redirect(url)
         return super().create(request, *args, **kwargs)
 
-class CountryRetrieveUpdateDestroy(generics.DestroyAPIView):
+class CountryDestroyView(generics.DestroyAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     permission_classes = (IsStaffOrReadOnly,)
