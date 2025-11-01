@@ -4,6 +4,7 @@ from airlines.views import (
     CountryDestroyView,
     CityListCreateView,
     CityDestroyView,
+    AirportListCreateView,
 )
 
 urlpatterns = [
@@ -12,6 +13,8 @@ urlpatterns = [
 
     path("cities/", CityListCreateView.as_view(), name="cities"),
     path("city_destroy/<int:pk>", CityDestroyView.as_view(), name="city_destroy"),
+
+    path("airports/", AirportListCreateView.as_view(), name="airports"),
 ]
 
 app_name = "airlines"
