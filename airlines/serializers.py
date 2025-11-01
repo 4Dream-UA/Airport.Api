@@ -31,3 +31,15 @@ class AirportSerializer(serializers.ModelSerializer):
         model = Airport
         fields = ['id', 'name', 'belonging_to', 'country', 'city']
         extra_kwargs = {'city': {'write_only': True}}
+
+
+class RouteSerializer(DestroyLinkMixin, serializers.ModelSerializer):
+    from_ = serializers.CharField(source="source.name", read_only=True)
+    to = serializers.CharField(source="destination.name", read_only=True)
+    class Meta:
+        model = Route
+        fields = ['id', 'from_', 'to', 'source', 'destination', 'distance']
+        extra_kwargs = {
+            'source': {'write_only': True},
+            'destination': {'write_only': True},
+        }
