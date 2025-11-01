@@ -16,3 +16,11 @@ class City(models.Model):
     """
     city = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+
+class Airport(models.Model):
+    """
+    Model that contain all serviced airports.
+    """
+    name = models.CharField(max_length=255)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
