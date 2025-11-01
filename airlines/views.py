@@ -2,8 +2,14 @@ from rest_framework import generics
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from airlines.models import Country, City
-from airlines.serializers import CountrySerializer, CitySerializer
+from airlines.models import (
+    Country, City, Airport,
+)
+from airlines.serializers import (
+    CountrySerializer,
+    CitySerializer,
+    AirportSerializer
+)
 from airlines.mixins import IsStaffOrReadOnlyMixin
 
 
@@ -25,3 +31,8 @@ class CityListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
 class CityDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+
+
+class AirportListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
+    queryset = Airport.objects.all()
+    serializer_class = AirportSerializer
