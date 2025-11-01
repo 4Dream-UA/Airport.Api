@@ -1,6 +1,8 @@
 from rest_framework.reverse import reverse
 from rest_framework import serializers
 
+from airlines.permissions import IsStaffOrReadOnly
+
 
 class DestroyLinkMixin(serializers.Serializer):
     destroy_link = serializers.SerializerMethodField()
@@ -12,3 +14,7 @@ class DestroyLinkMixin(serializers.Serializer):
                 f"{self.__class__.__name__} must define Meta.destroy_view_name"
             )
         return reverse(view_name, kwargs={'pk': obj.pk})
+
+
+class IsStaffOrReadOnlyMixin:
+    permission_classes = (IsStaffOrReadOnly,)
