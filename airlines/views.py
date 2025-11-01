@@ -1,4 +1,4 @@
-from rest_framework import filters
+from rest_framework import filters, permissions
 from rest_framework.viewsets import GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from django.shortcuts import redirect
@@ -47,3 +47,10 @@ class RouteViewSet(GeneralMixin, GenericViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = RouteFilter
     ordering_fields = ['travel_date', 'distance']
+
+
+class RoutePassiveViewSet(GeneralMixin, GenericViewSet):
+    queryset = Route.passive.all()
+    serializer_class = RouteSerializer
+    permission_classes = (permissions.IsAdminUser,)
+    filterset_class = RouteFilter
