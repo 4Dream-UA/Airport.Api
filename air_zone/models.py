@@ -47,7 +47,7 @@ class Flight(models.Model):
     Model that include flight information.
     """
     route = models.ForeignKey("Route", on_delete=models.CASCADE)  # TODO: Add a MT1 relation if airlines app models completed
-    airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL)
-    crew = models.ForeignKey(Crew, on_delete=models.SET_NULL)
+    airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL, null=True)
+    crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
