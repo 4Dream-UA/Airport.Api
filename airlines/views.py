@@ -36,3 +36,8 @@ class CityDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
 class AirportListCreateView(IsStaffOrReadOnlyMixin, generics.ListCreateAPIView):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
+
+
+class AirportDestroyView(IsStaffOrReadOnlyMixin, generics.DestroyAPIView):
+    queryset = Airport.objects.all()
+    serializer_class = AirportSerializer
