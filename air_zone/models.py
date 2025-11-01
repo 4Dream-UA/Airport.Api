@@ -1,6 +1,6 @@
 from django.db import models
 
-from extra_scripts.get_image_path_for_db_model import get_image_path_for_db_model
+from .extra_scripts.get_image_path_for_db_model import get_image_path_for_db_model
 from airlines.models import Route
 
 
