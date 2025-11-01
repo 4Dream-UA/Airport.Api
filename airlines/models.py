@@ -31,6 +31,16 @@ class Route(models.Model):
     Model that contain flight routes with...
     departure and arrival points.
     """
-    source = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True)
-    destination = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True)
+    source = models.ForeignKey(
+        Airport,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='route_source',
+    )
+    destination = models.ForeignKey(
+        Airport,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='route_destination',
+    )
     distance = models.IntegerField()
