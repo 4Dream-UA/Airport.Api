@@ -36,10 +36,20 @@ class AirportSerializer(serializers.ModelSerializer):
 class RouteSerializer(DestroyLinkMixin, serializers.ModelSerializer):
     from_ = serializers.CharField(source="source.name", read_only=True)
     to = serializers.CharField(source="destination.name", read_only=True)
+
     class Meta:
         model = Route
-        fields = ['id', 'from_', 'to', 'source', 'destination', 'distance']
+        fields = ['id', 'from_', 'to', 'source', 'destination', 'distance', 'travel_date']
         extra_kwargs = {
             'source': {'write_only': True},
             'destination': {'write_only': True},
         }
+
+    def validate(self, attrs):
+        source = attrs.get('source')
+        destination = attrs.get('destination')
+
+        if source == destination:
+            raise serializers.ValidationError("Source and destination cannot be the same!")
+
+        return attrs
