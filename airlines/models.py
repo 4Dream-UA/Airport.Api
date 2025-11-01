@@ -6,7 +6,7 @@ class Country(models.Model):
     Model that contain countries supported...
     by the service.
     """
-    country = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.country
@@ -20,13 +20,19 @@ class City(models.Model):
     city = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.city
+
 
 class Airport(models.Model):
     """
     Model that contain serviced airports.
     """
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Route(models.Model):
@@ -47,3 +53,9 @@ class Route(models.Model):
         related_name='route_destination',
     )
     distance = models.IntegerField()
+
+    def __str__(self):
+        return (
+            f"{self.source.city.city} -> {self.destination.city.city}"
+            f"({self.source} -> {self.destination}) => {self.distance}"
+        )
