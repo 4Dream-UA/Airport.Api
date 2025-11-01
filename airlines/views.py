@@ -23,3 +23,9 @@ class CityListCreateView(generics.ListCreateAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
     permission_classes = (IsStaffOrReadOnly,)
+
+
+class CityDestroyView(generics.DestroyAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = (IsStaffOrReadOnly,)
