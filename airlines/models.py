@@ -32,7 +32,7 @@ class Airport(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.city.city})"
 
     class Meta:
         constraints = [
@@ -58,6 +58,7 @@ class Route(models.Model):
         related_name='route_destination',
     )
     distance = models.IntegerField()
+    travel_date = models.DateTimeField(null=True)
 
     def __str__(self):
         return (
