@@ -1,3 +1,9 @@
 from django.db import models
 
-# Create your models here.
+
+class Country(models.Model):
+    """
+    Model that contain all countries supported...
+    by the service.
+    """
+    country = models.CharField(max_length=255)
