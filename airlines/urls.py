@@ -2,7 +2,8 @@ from django.urls import path
 from airlines.views import (
     CountryListCreateView,
     CountryDestroyView,
-    CityListCreateView
+    CityListCreateView,
+    CityDestroyView,
 )
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path("country_destroy/<int:pk>", CountryDestroyView.as_view(), name="country_destroy"),
 
     path("cities/", CityListCreateView.as_view(), name="cities"),
+    path("city_destroy/<int:pk>", CityDestroyView.as_view(), name="city_destroy"),
 ]
 
 app_name = "airlines"
