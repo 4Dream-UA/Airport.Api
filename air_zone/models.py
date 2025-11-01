@@ -1,5 +1,7 @@
 from django.db import models
+
 from extra_scripts.get_image_path_for_db_model import get_image_path_for_db_model
+from airlines.models import Route
 
 
 class Crew(models.Model):
@@ -46,7 +48,7 @@ class Flight(models.Model):
     """
     Model that include flight information.
     """
-    route = models.ForeignKey("Route", on_delete=models.CASCADE)  # TODO: Add a MT1 relation if airlines app models completed
+    route = models.ForeignKey(Route, on_delete=models.CASCADE)
     airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL, null=True)
     crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
     departure_time = models.DateTimeField()
