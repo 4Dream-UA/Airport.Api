@@ -28,11 +28,16 @@ class Airport(models.Model):
     """
     Model that contain serviced airports.
     """
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['city', 'name'], name='unique_airport')
+        ]
 
 
 class Route(models.Model):
