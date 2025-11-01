@@ -3,10 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from user.serializers import UserSerializer
+from user.permissions import IsNotAuthenticated
 
 
 class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsNotAuthenticated,)
 
 
 class UserManageView(generics.RetrieveAPIView):
