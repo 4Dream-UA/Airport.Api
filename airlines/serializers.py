@@ -24,11 +24,12 @@ class CitySerializer(DestroyLinkMixin, serializers.ModelSerializer):
         destroy_view_name = 'airlines:city_destroy'
 
 
-class AirportSerializer(serializers.ModelSerializer):
-    near_a_city = serializers.CharField(source="city.city", read_only=True)
+class AirportSerializer(DestroyLinkMixin, serializers.ModelSerializer):
+    belonging_to = serializers.CharField(source="city.city", read_only=True)
     country = serializers.CharField(source="city.country.country", read_only=True)
 
     class Meta:
         model = Airport
-        fields = ['id', 'name', 'near_a_city', 'country', 'city']
+        fields = ['id', 'name', 'belonging_to', 'country', 'city', 'destroy_link']
         extra_kwargs = {'city': {'write_only': True}}
+        destroy_view_name = 'airlines:airport_destroy'
