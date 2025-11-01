@@ -40,6 +40,21 @@ class Airport(models.Model):
         ]
 
 
+class ActiveRouteManager(models.Manager):
+    """
+    Manager for active routes.
+    """
+    def get_queryset(self):
+        return super().get_queryset().filter(travel_date__gte=timezone.now())
+
+class PassiveRouteManager(models.Manager):
+    """
+    Manager for no active routes.
+    """
+    def get_queryset(self):
+        return super().get_queryset().filter(travel_date__lt=timezone.now())
+
+
 class Route(models.Model):
     """
     Model that contain flight routes with...
@@ -59,6 +74,11 @@ class Route(models.Model):
     )
     distance = models.IntegerField()
     travel_date = models.DateTimeField(null=True)
+
+    # Managers
+    objects = models.Manager()          # build-in
+    active = ActiveRouteManager()       # only active routes
+    passive = PassiveRouteManager()     # only passive routes
 
     def __str__(self):
         return (
