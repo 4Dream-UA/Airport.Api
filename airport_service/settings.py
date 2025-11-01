@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'airlines',
     'tickets',
     'user',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -135,6 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.UserRateThrottle',
         'rest_framework.throttling.AnonRateThrottle',
