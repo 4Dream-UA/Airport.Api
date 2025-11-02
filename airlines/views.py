@@ -13,7 +13,9 @@ from airlines.serializers import (
     CountrySerializer,
     CitySerializer,
     AirportSerializer,
-    RouteSerializer, RouteDetailSerializer,
+    RouteSerializer,
+    RouteListSerializer,
+    RouteDetailSerializer,
 )
 from airlines.mixins import GeneralMixin
 
@@ -49,7 +51,20 @@ class RouteViewSet(GeneralMixin, RetrieveModelMixin, GenericViewSet):
     filterset_class = RouteFilter
     ordering_fields = ['distance']
 
+    def get_queryset(self):
+        id_ = self.request.query_params.get("id")
+
+        queryset = self.queryset
+
+        if id_:
+            queryset = queryset.filter(id=int(id_))
+
+        return queryset
+
     def get_serializer_class(self):
+        if self.action == 'list':
+            return RouteListSerializer
+
         if self.action == "retrieve":
             return RouteDetailSerializer
 
