@@ -34,16 +34,23 @@ class AirportSerializer(serializers.ModelSerializer):
 
 
 class RouteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Route
+        fields = ['id', 'source', 'destination', 'distance']
+        extra_kwargs = {
+            'source': {'write_only': True},
+            'destination': {'write_only': True},
+        }
+
+
+class RouteListSerializer(RouteSerializer):
     from_ = serializers.CharField(source="source.name", read_only=True)
     to = serializers.CharField(source="destination.name", read_only=True)
 
     class Meta:
         model = Route
         fields = ['id', 'from_', 'to', 'source', 'destination', 'distance']
-        extra_kwargs = {
-            'source': {'write_only': True},
-            'destination': {'write_only': True},
-        }
+
 
     def validate(self, attrs):
         source = attrs.get('source')
@@ -54,7 +61,7 @@ class RouteSerializer(serializers.ModelSerializer):
 
         return attrs
 
-class RouteDetailSerializer(serializers.ModelSerializer):
+class RouteDetailSerializer(RouteSerializer):
     from_airport = serializers.CharField(source="source.name", read_only=True)
     from_city = serializers.CharField(source="source.city.city", read_only=True)
     from_country = serializers.CharField(source="source.city.country.country", read_only=True)
@@ -70,8 +77,3 @@ class RouteDetailSerializer(serializers.ModelSerializer):
             'to_airport', 'to_city', 'to_country',
             'distance', 'source', 'destination',
         ]
-
-        extra_kwargs = {
-            'source': {'write_only': True},
-            'destination': {'write_only': True},
-        }
