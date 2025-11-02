@@ -6,7 +6,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from airlines.models import (
-    Country, City, Airport,
+    Country,
+    City,
+    Airport,
     Route,
 )
 from airlines.serializers import (
@@ -36,12 +38,14 @@ class AirportViewSet(GeneralMixin, GenericViewSet):
 
 
 class RouteFilter(FilterSet):
-    source_name = CharFilter(field_name='source__name', lookup_expr='icontains')
-    destination_name = CharFilter(field_name='destination__name', lookup_expr='icontains')
+    source_name = CharFilter(field_name="source__name", lookup_expr="icontains")
+    destination_name = CharFilter(
+        field_name="destination__name", lookup_expr="icontains"
+    )
 
     class Meta:
         model = Route
-        fields = ['source_name', 'destination_name']
+        fields = ["source_name", "destination_name"]
 
 
 class RouteViewSet(GeneralMixin, RetrieveModelMixin, GenericViewSet):
@@ -49,7 +53,7 @@ class RouteViewSet(GeneralMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = RouteSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = RouteFilter
-    ordering_fields = ['distance']
+    ordering_fields = ["distance"]
 
     def get_queryset(self):
         id_ = self.request.query_params.get("id")
@@ -62,7 +66,7 @@ class RouteViewSet(GeneralMixin, RetrieveModelMixin, GenericViewSet):
         return queryset
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return RouteListSerializer
 
         if self.action == "retrieve":
