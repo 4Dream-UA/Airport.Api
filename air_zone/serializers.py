@@ -25,4 +25,12 @@ class AirplaneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Airplane
         fields = ["id", "name", "rows", "seats", "image", "type"]
-        extra_kwargs = {"type": {"write_only": True}}
+        extra_kwargs = {"type": {"write_only": True}, "type_reference": {"write_only": True}}
+
+
+class AirplaneListSerializer(serializers.ModelSerializer):
+    types = serializers.CharField(many=True, source="airplane.type", read_only=True)
+
+    class Meta:
+        model = Airplane
+        fields = ["id", "name", "rows", "seats", "image", "types", "type", "type_reference"]
