@@ -1,4 +1,5 @@
 from rest_framework import filters, permissions
+from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.viewsets import GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from django.shortcuts import redirect
@@ -41,7 +42,7 @@ class RouteFilter(FilterSet):
         fields = ['source_name', 'destination_name']
 
 
-class RouteViewSet(GeneralMixin, GenericViewSet):
+class RouteViewSet(GeneralMixin, RetrieveModelMixin, GenericViewSet):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
