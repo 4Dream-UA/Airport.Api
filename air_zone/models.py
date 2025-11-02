@@ -42,6 +42,7 @@ class Airplane(models.Model):
     rows = models.IntegerField()
     seats = models.IntegerField()
     image = models.ImageField(upload_to=get_image_path_for_db_model)
+    type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
 
 
 class Flight(models.Model):
