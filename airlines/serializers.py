@@ -7,7 +7,6 @@ from .models import (
     Airport,
     Route,
 )
-from .mixins import DestroyLinkMixin
 
 
 class CountrySerializer(serializers.ModelSerializer):
