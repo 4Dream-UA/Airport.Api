@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import TypeReference, Type, Crew
+from .models import TypeReference, Type, Crew, Airplane
 
 
 class TypeReferenceSerializer(serializers.ModelSerializer):
@@ -19,3 +19,10 @@ class CrewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crew
         fields = ["id", "first_name", "last_name"]
+
+
+class AirplaneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airplane
+        fields = ["id", "name", "rows", "seats", "image", "type"]
+        extra_kwargs = {"type": {"write_only": True}}
