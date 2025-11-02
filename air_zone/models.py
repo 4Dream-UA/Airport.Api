@@ -12,6 +12,9 @@ class Crew(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class TypeReference(models.Model):
     """
@@ -24,6 +27,15 @@ class TypeReference(models.Model):
     masa = models.IntegerField()
     height = models.IntegerField()
 
+    def __str__(self):
+        return (
+            f"Speed: {self.speed}"
+            f"Distance: {self.distance}"
+            f"Carrying: {self.carrying}"
+            f"Masa: {self.masa} "
+            f"Height: {self.height}"
+        )
+
 
 class Type(models.Model):
     """
@@ -31,6 +43,9 @@ class Type(models.Model):
     narrow-body, wide-body, etc.
     """
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Airplane(models.Model):
@@ -44,6 +59,9 @@ class Airplane(models.Model):
     type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
     references = models.OneToOneField(TypeReference, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Flight(models.Model):
     """
@@ -54,3 +72,9 @@ class Flight(models.Model):
     crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
+
+    def __str__(self):
+        return (
+            f"({self.route.source.name} -> {self.route.destination.name})"
+            f"{self.airplane.name} ({self.departure_time - self.arrival_time})"
+        )
