@@ -16,12 +16,12 @@ class Crew(models.Model):
 class TypeReference(models.Model):
     """
     Model that include main references of airplane:
-    speed, distance, carrying, mass, height.
+    speed, distance, carrying, masa, height.
     """
     speed = models.IntegerField()
     distance = models.IntegerField()
     carrying = models.IntegerField()
-    mass = models.IntegerField()
+    masa = models.IntegerField()
     height = models.IntegerField()
 
 
@@ -31,7 +31,6 @@ class Type(models.Model):
     narrow-body, wide-body, etc.
     """
     name = models.CharField(max_length=255)
-    type_reference = models.OneToOneField(TypeReference, on_delete=models.CASCADE)
 
 
 class Airplane(models.Model):
@@ -43,6 +42,7 @@ class Airplane(models.Model):
     seats = models.IntegerField()
     image = models.ImageField(upload_to=get_image_path_for_db_model)
     type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
+    references = models.OneToOneField(TypeReference, on_delete=models.SET_NULL, null=True)
 
 
 class Flight(models.Model):
