@@ -6,17 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airlines', '0002_alter_airport_name_alter_country_country'),
+        ("airlines", "0002_alter_airport_name_alter_country_country"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='airport',
-            name='name',
+            model_name="airport",
+            name="name",
             field=models.CharField(max_length=255),
         ),
         migrations.AddConstraint(
-            model_name='airport',
-            constraint=models.UniqueConstraint(fields=('city', 'name'), name='unique_airport'),
+            model_name="airport",
+            constraint=models.UniqueConstraint(
+                fields=("city", "name"), name="unique_airport"
+            ),
         ),
     ]

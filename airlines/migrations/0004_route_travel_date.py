@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airlines', '0003_alter_airport_name_airport_unique_airport'),
+        ("airlines", "0003_alter_airport_name_airport_unique_airport"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='route',
-            name='travel_date',
+            model_name="route",
+            name="travel_date",
             field=models.DateTimeField(null=True),
         ),
     ]

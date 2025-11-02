@@ -6,7 +6,6 @@ from airlines.views import (
     CityViewSet,
     AirportViewSet,
     RouteViewSet,
-    RoutePassiveViewSet,
 )
 
 app_name = "airlines"

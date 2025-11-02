@@ -7,6 +7,7 @@ class Country(models.Model):
     Model that contain countries supported...
     by the service.
     """
+
     country = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
@@ -18,6 +19,7 @@ class City(models.Model):
     Model that contain supported cities in...
     supported counties.
     """
+
     city = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
@@ -29,6 +31,7 @@ class Airport(models.Model):
     """
     Model that contain serviced airports.
     """
+
     name = models.CharField(max_length=255)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
@@ -37,7 +40,7 @@ class Airport(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['city', 'name'], name='unique_airport')
+            models.UniqueConstraint(fields=["city", "name"], name="unique_airport")
         ]
 
 
@@ -46,21 +49,21 @@ class Route(models.Model):
     Model that contain flight routes with...
     departure and arrival points.
     """
+
     source = models.ForeignKey(
         Airport,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='route_source',
+        related_name="route_source",
     )
     destination = models.ForeignKey(
         Airport,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='route_destination',
+        related_name="route_destination",
     )
     distance = models.IntegerField()
     travel_date = models.DateTimeField(null=True)
-
 
     def __str__(self):
         return (

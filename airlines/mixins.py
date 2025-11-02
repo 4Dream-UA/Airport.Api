@@ -13,7 +13,7 @@ class DestroyLinkMixin(serializers.Serializer):
             raise AttributeError(
                 f"{self.__class__.__name__} must define Meta.destroy_view_name"
             )
-        return reverse(view_name, kwargs={'pk': obj.pk})
+        return reverse(view_name, kwargs={"pk": obj.pk})
 
 
 class IsStaffOrReadOnlyMixin:
