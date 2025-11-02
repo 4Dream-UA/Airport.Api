@@ -53,3 +53,25 @@ class RouteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Source and destination cannot be the same!")
 
         return attrs
+
+class RouteDetailSerializer(serializers.ModelSerializer):
+    from_airport = serializers.CharField(source="source.name", read_only=True)
+    from_city = serializers.CharField(source="source.city.city", read_only=True)
+    from_country = serializers.CharField(source="source.city.country.country", read_only=True)
+
+    to_airport = serializers.CharField(source="destination.name", read_only=True)
+    to_city = serializers.CharField(source="destination.city.city", read_only=True)
+    to_country = serializers.CharField(source="destination.city.country.country", read_only=True)
+
+    class Meta:
+        model = Route
+        fields = [
+            'from_airport', 'from_city', 'from_country',
+            'to_airport', 'to_city', 'to_country',
+            'distance', 'source', 'destination',
+        ]
+
+        extra_kwargs = {
+            'source': {'write_only': True},
+            'destination': {'write_only': True},
+        }
