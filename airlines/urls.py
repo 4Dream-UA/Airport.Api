@@ -17,7 +17,6 @@ router.register("countries", CountryViewSet)
 router.register("cities", CityViewSet)
 router.register("airports", AirportViewSet)
 router.register("routes", RouteViewSet)
-router.register("routes_passive", RoutePassiveViewSet, basename="route_passive")
 
 
 urlpatterns = [path("", include(router.urls))]

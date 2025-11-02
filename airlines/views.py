@@ -42,15 +42,9 @@ class RouteFilter(FilterSet):
 
 
 class RouteViewSet(GeneralMixin, GenericViewSet):
-    queryset = Route.active.all()
+    queryset = Route.objects.all()
     serializer_class = RouteSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = RouteFilter
-    ordering_fields = ['travel_date', 'distance']
+    ordering_fields = ['distance']
 
-
-class RoutePassiveViewSet(GeneralMixin, GenericViewSet):
-    queryset = Route.passive.all()
-    serializer_class = RouteSerializer
-    permission_classes = (permissions.IsAdminUser,)
-    filterset_class = RouteFilter
