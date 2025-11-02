@@ -13,6 +13,6 @@ class TypeReferenceViewSet(GeneralMixin, GenericViewSet):
     serializer_class = TypeReferenceSerializer
 
 
-class TypeViewSet(GenericViewSet, GenericViewSet):
+class TypeViewSet(GeneralMixin, GenericViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
