@@ -24,21 +24,33 @@ class CrewSerializer(serializers.ModelSerializer):
 class AirplaneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Airplane
-        fields = ["id", "name", "rows", "seats", "image", "type"]
-        extra_kwargs = {"type": {"write_only": True}, "type_reference": {"write_only": True}}
+        fields = ["id", "name", "rows", "seats", "image", "type", "references"]
+        extra_kwargs = {
+            "type": {"write_only": True},
+            "references": {"write_only": True},
+        }
 
 
-class AirplaneListSerializer(AirplaneSerializer):
-    types = serializers.CharField(many=True, source="airplane.type", read_only=True)
-
-    class Meta:
-        model = Airplane
-        fields = ["id", "name", "rows", "seats", "image", "types", "type", "type_reference"]
-
-
-class AirplaneDetailSerializer(AirplaneListSerializer):
-    references = TypeReferenceSerializer(many=True, read_only=True)
+class AirplaneListSerializer(serializers.ModelSerializer):
+    types = serializers.CharField(source="type.name", read_only=True)
 
     class Meta:
         model = Airplane
-        fields = ["id", "name", "rows", "seats", "image", "types", "references", "type", "type_reference"]
+        fields = ["id", "name", "rows", "seats", "image", "types"]
+
+
+class AirplaneDetailSerializer(serializers.ModelSerializer):
+    types = serializers.CharField(source="type.name", read_only=True)
+    references = TypeReferenceSerializer(read_only=True)
+
+    class Meta:
+        model = Airplane
+        fields = [
+            "id",
+            "name",
+            "rows",
+            "seats",
+            "image",
+            "types",
+            "references",
+        ]
