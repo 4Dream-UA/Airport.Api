@@ -6,6 +6,6 @@ from .serializers import TypeReferenceSerializer
 from airlines.mixins import GeneralMixin
 
 
-class TypeReferenceViewSet(RetrieveModelMixin, GenericViewSet):
+class TypeReferenceViewSet(GeneralMixin, GenericViewSet):
     queryset = TypeReference.objects.all()
     serializer_class = TypeReferenceSerializer
