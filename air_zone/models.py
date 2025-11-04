@@ -55,7 +55,7 @@ class Airplane(models.Model):
     name = models.CharField(max_length=255, unique=True)
     rows = models.IntegerField()
     seats = models.IntegerField()
-    image = models.ImageField(upload_to=get_image_path_for_db_model)
+    image = models.ImageField(upload_to=get_image_path_for_db_model, blank=True)
     type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
     references = models.OneToOneField(TypeReference, on_delete=models.SET_NULL, null=True)
 
