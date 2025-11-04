@@ -69,7 +69,7 @@ class Flight(models.Model):
     """
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL, null=True)
-    crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
+    crew = models.ManyToManyField(Crew, null=True)
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
 
