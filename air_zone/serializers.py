@@ -100,32 +100,50 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
 
 
 class FlightSerializer(serializers.ModelSerializer):
-    route = RouteSerializer()
+    route_ = RouteSerializer(write_only=True)
     from_ = serializers.CharField(source="route.source.name", read_only=True)
     to = serializers.CharField(source="route.destination.name", read_only=True)
+    distance = serializers.CharField(source="route.distance", read_only=True)
+    airplane_ = serializers.CharField(source="airplane.name", read_only=True)
 
     class Meta:
         model = Flight
-        fields = ["id", "from_", "to", "route", "airplane", "crew", "departure_time", "arrival_time"]
+        fields = [
+            "id",
+            "from_",
+            "to",
+            "airplane_",
+            "distance",
+            "departure_time",
+            "arrival_time",
+            "airplane",
+            "crew",
+            "route_",
+        ]
+
         extra_kwargs = {
-            "route": {"write_only": True},
+            "crew": {"write_only": True},
+            "airplane": {"write_only": True},
         }
 
     def create(self, validated_data):
-        route_data = validated_data.pop("route", None)
-        flight = Flight.objects.create(**validated_data)
+        route_data = validated_data.pop("route_", None)
+        crew_data = validated_data.pop("crew", [])
 
+        route = None
         if route_data:
             source = route_data.get("source")
             destination = route_data.get("destination")
 
-            route, created = Route.objects.get_or_create(
+            route, _ = Route.objects.get_or_create(
                 source=source,
                 destination=destination,
-                defaults=route_data
+                defaults=route_data,
             )
 
-            flight.route = route
-            flight.save()
+        flight = Flight.objects.create(route=route, **validated_data)
+
+        if crew_data:
+            flight.crew.set(crew_data)
 
         return flight
