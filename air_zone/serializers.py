@@ -147,3 +147,22 @@ class FlightSerializer(serializers.ModelSerializer):
             flight.crew.set(crew_data)
 
         return flight
+
+
+class FlightListSerializer(serializers.ModelSerializer):
+    from_ = serializers.CharField(source="route.source.name", read_only=True)
+    to = serializers.CharField(source="route.destination.name", read_only=True)
+    distance = serializers.IntegerField(source="route.distance", read_only=True)
+    airplane = serializers.CharField(source="airplane.name", read_only=True)
+
+    class Meta:
+        model = Flight
+        fields = [
+            "id",
+            "from_",
+            "to",
+            "airplane",
+            "distance",
+            "departure_time",
+            "arrival_time",
+        ]
