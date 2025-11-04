@@ -6,6 +6,7 @@ from air_zone.views import (
     TypeViewSet,
     CrewViewSet,
     AirplaneViewSet,
+    FlightViewSet,
 )
 
 app_name = "air_zone"
@@ -16,6 +17,7 @@ router.register("references", TypeReferenceViewSet)
 router.register("types", TypeViewSet)
 router.register("pilots", CrewViewSet)
 router.register("airplanes", AirplaneViewSet)
+router.register("flights", FlightViewSet)
 
 
 urlpatterns = [path("", include(router.urls))]
