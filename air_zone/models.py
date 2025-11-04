@@ -78,3 +78,14 @@ class Flight(models.Model):
             f"({self.route.source.name} -> {self.route.destination.name})"
             f"{self.airplane.name} ({self.departure_time - self.arrival_time})"
         )
+
+    def clean(self):
+        # Chack that departure_time is able
+        if self.departure_time > self.arrival_time:
+            raise ValidationError(
+                {'departure_time': 'departure_time is not able.'}
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
