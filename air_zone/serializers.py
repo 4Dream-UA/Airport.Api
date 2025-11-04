@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from .models import TypeReference, Type, Crew, Airplane
+from .models import (
+    TypeReference,
+    Type,
+    Crew,
+    Airplane,
+    Flight
+)
+from airlines.serializers import RouteSerializer
+from airlines.models import Route
 
 
 class TypeReferenceSerializer(serializers.ModelSerializer):
@@ -89,3 +97,35 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
             "types",
             "references",
         ]
+
+
+class FlightSerializer(serializers.ModelSerializer):
+    route = RouteSerializer()
+    from_ = serializers.CharField(source="route.source.name", read_only=True)
+    to = serializers.CharField(source="route.destination.name", read_only=True)
+
+    class Meta:
+        model = Flight
+        fields = ["id", "from_", "to", "route", "airplane", "crew", "departure_time", "arrival_time"]
+        extra_kwargs = {
+            "route": {"write_only": True},
+        }
+
+    def create(self, validated_data):
+        route_data = validated_data.pop("route", None)
+        flight = Flight.objects.create(**validated_data)
+
+        if route_data:
+            source = route_data.get("source")
+            destination = route_data.get("destination")
+
+            route, created = Route.objects.get_or_create(
+                source=source,
+                destination=destination,
+                defaults=route_data
+            )
+
+            flight.route = route
+            flight.save()
+
+        return flight
