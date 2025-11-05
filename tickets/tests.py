@@ -103,3 +103,20 @@ def test_ticket_list_returns_flight_info(api_client, user, setup_data):
     assert data["to"] == "WAW"
     assert "departure" in data
     assert "arrival" in data
+
+
+@pytest.mark.django_db
+def test_order_list_for_user(api_client, user, setup_data):
+    api_client.force_authenticate(user=user)
+    flight = setup_data["flight"]
+
+    order1 = Order.objects.create(user=user)
+    Ticket.objects.create(row=2, seat=3, flight=flight, order=order1)
+
+    url = reverse("tickets:orders-list")
+    response = api_client.get(url)
+
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
+    assert "tickets" in response.data[0]
+    assert response.data[0]["tickets"][0]["row"] == 2
