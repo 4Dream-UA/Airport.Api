@@ -89,3 +89,16 @@ def test_route_list_and_filter(api_client, sample_data):
     resp_filter = api_client.get(url, {"source_name": "IEV"})
     assert len(resp_filter.data) == 1
     assert resp_filter.data[0]["distance"] == 690
+
+@pytest.mark.django_db
+def test_route_detail_view(api_client, sample_data):
+    route = sample_data["route"]
+    url = reverse("airlines:route-detail", args=[route.id])
+
+    response = api_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+
+    assert response.data["from_airport"] == "IEV"
+    assert response.data["to_airport"] == "WAW"
+    assert response.data["from_country"] == "Ukraine"
+    assert response.data["to_country"] == "Poland"
